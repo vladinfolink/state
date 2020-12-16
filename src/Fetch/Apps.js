@@ -6,11 +6,15 @@ const ThemedButton = () => {
 
   return (
     <button
-      style={{ color: theme.primary }}
       onClick={() =>
         dispatch({
           type: "SET_REQUEST_DATA",
-          newTheme: { primary: "blue" },
+          uid: 'asdkjnsakdfjsdf',
+          data: {
+            apiResponse: {
+              data: 'adasdaslkdjasd'
+            }
+          }
         })
       }
     >
