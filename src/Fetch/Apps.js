@@ -1,10 +1,11 @@
 import { StateProvider, useRequest, useFetch } from "./Fetch";
 
 const ThemedButton = () => {
-  const {cache, dispatch} = useFetch();
+  const {cache, dispatch, state} = useFetch();
 
   return (
     <>
+    {JSON.stringify(state)}
       <button
         onClick={() =>
           dispatch({

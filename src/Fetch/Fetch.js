@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, {useEffect, useState, createContext, useContext, useReducer } from "react";
 
 import { omit } from "./util";
 
@@ -37,9 +37,28 @@ export const useRequest = () => {
 };
 
 export const useFetch = () => {
+  const [state, setState] = useState({})
   const [{ cache }, dispatch] = useRequest();
 
+  useEffect(() => {
+    dispatch({
+      type: "SET_REQUEST_DATA",
+      uid: "asdkjnsakdfjsdf",
+      data: {
+        apiResponse: {
+          data: "adasdaslkdjasd",
+        },
+      },
+    });
+  }, [])
+
+  useEffect(() => {
+    setState(cache)
+  }, [cache])
+
+  console.log({state})
+
   return {
-    cache, dispatch
+    cache, dispatch, state: {...state}
   }
 };
