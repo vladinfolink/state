@@ -12,9 +12,7 @@ import { skipKey, getUniqString } from "./util";
 
 export const StateContext = createContext();
 
-const initialState = {
-  cache: { randomUid: "green" },
-};
+const initialState = { cache: {} };
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -23,9 +21,7 @@ const reducer = (state, action) => {
         ...state,
         cache: {
           ...state.cache,
-          [action.uid]: {
-            ...skipKey(action, ["uid"]),
-          },
+          [action.uid]: action.payload,
         },
       };
 
@@ -60,13 +56,15 @@ export const useFetch = (props) => {
       dispatch({
         uid,
         type: "SET_REQUEST_DATA",
-        ...(onlyData ? { data: response.data } : { response }),
+        payload: {
+          ...(onlyData ? { data: response.data } : { response }),
+        },
       });
     })();
   }, []);
 
   useEffect(() => {
-    setState(cache);
+    setState({ ...state, ...cache });
   }, [cache]);
 
   return {
