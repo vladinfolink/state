@@ -6,7 +6,7 @@ import React, {
   useReducer,
 } from "react";
 
-import { omit } from "./util";
+import { skipKey } from "./util";
 
 export const StateContext = createContext();
 
@@ -22,7 +22,7 @@ const reducer = (state, action) => {
         cache: {
           ...state.cache,
           [action.uid]: {
-            ...omit(action, ["uid"]),
+            ...skipKey(action, ["uid"]),
           },
         },
       };

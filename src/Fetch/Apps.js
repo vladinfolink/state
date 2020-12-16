@@ -1,4 +1,4 @@
-import { StateProvider, useRequest, useFetch } from "./Fetch";
+import { StateProvider, useFetch } from "./Fetch";
 
 const ThemedButton = () => {
   const req = {

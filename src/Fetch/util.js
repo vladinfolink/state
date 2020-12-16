@@ -1,4 +1,4 @@
-export function omit(object, array) {
+export function skipKey(object, array) {
   return Object.keys(object)
     .filter(function (item) {
       return !array.includes(item);
