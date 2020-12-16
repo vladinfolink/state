@@ -1,6 +1,5 @@
 import React, {
   useEffect,
-  useState,
   createContext,
   useContext,
   useReducer,
@@ -10,6 +9,7 @@ import axios from "axios";
 
 import { skipKey, getUniqString } from "./util";
 
+// dalea grele:
 export const StateContext = createContext();
 
 const initialState = { cache: {} };
@@ -44,13 +44,11 @@ export const useFetch = (props) => {
   const { endpoint, method, params, onlyData } = props;
   const [{ cache }, dispatch] = useRequest();
 
-  const [state, setState] = useState({});
+  const uid = getUniqString({ ...props });
 
   useEffect(() => {
     (async () => {
       const response = await axios[method](endpoint);
-
-      const uid = getUniqString({ ...props });
 
       dispatch({
         uid,
@@ -62,11 +60,5 @@ export const useFetch = (props) => {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log({ cache });
-  }, [cache]);
-
-  return {
-    ...cache,
-  };
+  return cache[uid];
 };
