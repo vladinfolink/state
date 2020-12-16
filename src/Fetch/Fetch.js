@@ -42,16 +42,15 @@ export const useRequest = () => {
 
 export const useFetch = (props) => {
   const { endpoint, method, params, onlyData } = props;
-  const [state, setState] = useState({});
   const [{ cache }, dispatch] = useRequest();
+
+  const [state, setState] = useState({});
 
   useEffect(() => {
     (async () => {
       const response = await axios[method](endpoint);
-      console.log({ response });
 
       const uid = getUniqString({ ...props });
-      console.log({ uid });
 
       dispatch({
         uid,
@@ -64,10 +63,10 @@ export const useFetch = (props) => {
   }, []);
 
   useEffect(() => {
-    setState({ ...state, ...cache });
+    console.log({ cache });
   }, [cache]);
 
   return {
-    state,
+    ...cache,
   };
 };
