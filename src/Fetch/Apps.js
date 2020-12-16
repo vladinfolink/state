@@ -1,29 +1,19 @@
 import { StateProvider, useRequest, useFetch } from "./Fetch";
 
 const ThemedButton = () => {
-  const {cache, dispatch, state} = useFetch();
+  const req = {
+    type: "SET_REQUEST_DATA",
+    uid: "asdkjnsakdfjsdf",
+    data: {
+      apiResponse: {
+        data: "adasdaslkdjasd",
+      },
+    },
+  };
 
-  return (
-    <>
-    {JSON.stringify(state)}
-      <button
-        onClick={() =>
-          dispatch({
-            type: "SET_REQUEST_DATA",
-            uid: "asdkjnsakdfjsdf",
-            data: {
-              apiResponse: {
-                data: "adasdaslkdjasd",
-              },
-            },
-          })
-        }
-      >
-        Make me blue!
-      </button>
-      {JSON.stringify(cache)}
-    </>
-  );
+  const { cache, dispatch, state } = useFetch(req);
+
+  return <>{JSON.stringify(state)}</>;
 };
 
 export const Apps = () => {

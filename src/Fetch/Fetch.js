@@ -1,4 +1,10 @@
-import React, {useEffect, useState, createContext, useContext, useReducer } from "react";
+import React, {
+  useEffect,
+  useState,
+  createContext,
+  useContext,
+  useReducer,
+} from "react";
 
 import { omit } from "./util";
 
@@ -32,33 +38,25 @@ export const StateProvider = ({ children }) => (
   </StateContext.Provider>
 );
 
-export const useRequest = () => {
+export const useRequest = (props) => {
   return useContext(StateContext);
 };
 
-export const useFetch = () => {
-  const [state, setState] = useState({})
+export const useFetch = (props) => {
+  const [state, setState] = useState({});
   const [{ cache }, dispatch] = useRequest();
 
   useEffect(() => {
-    dispatch({
-      type: "SET_REQUEST_DATA",
-      uid: "asdkjnsakdfjsdf",
-      data: {
-        apiResponse: {
-          data: "adasdaslkdjasd",
-        },
-      },
-    });
-  }, [])
+    dispatch(props);
+  }, []);
 
   useEffect(() => {
-    setState(cache)
-  }, [cache])
-
-  console.log({state})
+    setState(cache);
+  }, [cache]);
 
   return {
-    cache, dispatch, state: {...state}
-  }
+    cache,
+    dispatch,
+    state,
+  };
 };
