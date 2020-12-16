@@ -1,17 +1,14 @@
 import { StateProvider, useFetch } from "./Fetch";
 
 const ThemedButton = () => {
-  const req = {
-    type: "SET_REQUEST_DATA",
-    uid: "asdkjnsakdfjsdf",
-    data: {
-      apiResponse: {
-        data: "adasdaslkdjasd",
-      },
-    },
-  };
+  const { state } = useFetch({
+    endpoint: "/",
+    method: "GET",
+    params: { id: 123 },
+    onlyData: true
+  });
 
-  const { cache, dispatch, state } = useFetch(req);
+  console.log(state)
 
   return <>{JSON.stringify(state)}</>;
 };

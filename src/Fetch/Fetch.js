@@ -6,7 +6,9 @@ import React, {
   useReducer,
 } from "react";
 
-import { skipKey } from "./util";
+import axios from "axios";
+
+import { skipKey, genUniqStrFromKeys } from "./util";
 
 export const StateContext = createContext();
 
@@ -38,16 +40,25 @@ export const StateProvider = ({ children }) => (
   </StateContext.Provider>
 );
 
-export const useRequest = (props) => {
+export const useRequest = () => {
   return useContext(StateContext);
 };
 
-export const useFetch = (props) => {
+export const useFetch = ({ endpoint, method, params, onlyData }) => {
   const [state, setState] = useState({});
   const [{ cache }, dispatch] = useRequest();
 
   useEffect(() => {
-    dispatch(props);
+    (async () => {
+      const response = await axios.get(endpoint);
+      console.log({ response });
+
+      dispatch({
+        type: "SET_REQUEST_DATA",
+        uid: `${"asdasdasdasdasdasd"}`,
+        ...(onlyData ? { data: response.data } : { response }),
+      });
+    })();
   }, []);
 
   useEffect(() => {
@@ -55,8 +66,6 @@ export const useFetch = (props) => {
   }, [cache]);
 
   return {
-    cache,
-    dispatch,
     state,
   };
 };
