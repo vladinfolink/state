@@ -1,9 +1,9 @@
-export function omit(obj, arr) {
-  return Object.keys(obj)
-    .filter(function (k) {
-      return !arr.includes(k);
+export function omit(object, array) {
+  return Object.keys(object)
+    .filter(function (item) {
+      return !array.includes(item);
     })
-    .reduce(function (acc, key) {
-      return (acc[key] = obj[key]), acc;
+    .reduce(function (accessor, key) {
+      return (accessor[key] = object[key]), accessor;
     }, {});
 }
