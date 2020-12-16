@@ -1,8 +1,8 @@
 import { StateProvider } from "./Fetch";
-import { useFetch } from "./Fetch";
+import { useRequest } from "./Fetch";
 
 const ThemedButton = () => {
-  const [{ theme }, dispatch] = useFetch();
+  const [{ cache }, dispatch] = useRequest();
 
   return (
     <button

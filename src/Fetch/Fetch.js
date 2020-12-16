@@ -32,4 +32,7 @@ export const StateProvider = ({ children }) => (
   </StateContext.Provider>
 );
 
-export const useFetch = () => useContext(StateContext);
+
+export const useRequest = () => {
+  return useContext(StateContext)
+}
