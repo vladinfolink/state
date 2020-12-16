@@ -2,10 +2,10 @@ import { StateProvider, useFetch } from "./Fetch";
 
 const ThemedButton = () => {
   const { state } = useFetch({
-    endpoint: "/",
-    method: "GET",
+    endpoint: "https://swapi.dev/api/people/1",
+    method: "get",
     params: { id: 123 },
-    onlyData: true
+    onlyData: true,
   });
 
   console.log(state)

@@ -16,6 +16,10 @@ export function genUniqStrFromKeys(object, string = "") {
     } else {
       ini[prepend + key] = object[key];
     }
-    return ini
+    return ini;
   }, {});
+}
+
+export function getUniqString(object) {
+  return Object.entries(genUniqStrFromKeys(object)).flat(Infinity).join("~~~");
 }

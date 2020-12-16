@@ -8,7 +8,7 @@ import React, {
 
 import axios from "axios";
 
-import { skipKey, genUniqStrFromKeys } from "./util";
+import { skipKey, getUniqString } from "./util";
 
 export const StateContext = createContext();
 
@@ -44,18 +44,22 @@ export const useRequest = () => {
   return useContext(StateContext);
 };
 
-export const useFetch = ({ endpoint, method, params, onlyData }) => {
+export const useFetch = (props) => {
+  const { endpoint, method, params, onlyData } = props;
   const [state, setState] = useState({});
   const [{ cache }, dispatch] = useRequest();
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get(endpoint);
+      const response = await axios[method](endpoint);
       console.log({ response });
 
+      const uid = getUniqString({ ...props });
+      console.log({ uid });
+
       dispatch({
+        uid,
         type: "SET_REQUEST_DATA",
-        uid: `${"asdasdasdasdasdasd"}`,
         ...(onlyData ? { data: response.data } : { response }),
       });
     })();
