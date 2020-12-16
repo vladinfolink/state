@@ -2,7 +2,24 @@ import React, { createContext, useContext, useReducer } from "react";
 
 export const StateContext = createContext();
 
-export const StateProvider = ({ initialState, reducer, children }) => (
+const initialState = {
+  theme: { primary: "green" },
+};
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "changeTheme":
+        return {
+          ...state,
+          theme: action.newTheme,
+        };
+
+      default:
+        return state;
+    }
+  };
+
+export const StateProvider = ({ children }) => (
   <StateContext.Provider value={useReducer(reducer, initialState)}>
     {children}
   </StateContext.Provider>
