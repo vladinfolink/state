@@ -32,7 +32,14 @@ export const StateProvider = ({ children }) => (
   </StateContext.Provider>
 );
 
-
 export const useRequest = () => {
-  return useContext(StateContext)
-}
+  return useContext(StateContext);
+};
+
+export const useFetch = () => {
+  const [{ cache }, dispatch] = useRequest();
+
+  return {
+    cache, dispatch
+  }
+};
