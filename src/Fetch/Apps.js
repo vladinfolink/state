@@ -3,12 +3,13 @@ import { useFetch } from "./Fetch";
 
 const ThemedButton = () => {
   const [{ theme }, dispatch] = useFetch();
+
   return (
     <button
       style={{ color: theme.primary }}
       onClick={() =>
         dispatch({
-          type: "changeTheme",
+          type: "SET_REQUEST_DATA",
           newTheme: { primary: "blue" },
         })
       }

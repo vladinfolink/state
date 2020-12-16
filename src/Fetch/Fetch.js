@@ -8,7 +8,7 @@ const initialState = {
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case "changeTheme":
+      case "SET_REQUEST_DATA":
         return {
           ...state,
           theme: action.newTheme,
