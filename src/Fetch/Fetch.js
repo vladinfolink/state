@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  createContext,
-  useContext,
-  useReducer,
-} from "react";
+import React, { useEffect, createContext, useContext, useReducer } from "react";
 
 import axios from "axios";
 
@@ -48,6 +43,7 @@ export const useFetch = (props) => {
 
   useEffect(() => {
     (async () => {
+      if (cache[uid]) return;
       const response = await axios[method](endpoint);
 
       dispatch({
@@ -60,8 +56,5 @@ export const useFetch = (props) => {
     })();
   }, []);
 
-  return [
-    cache[uid],
-    cache
-  ]
+  return [cache[uid], cache];
 };
