@@ -60,5 +60,8 @@ export const useFetch = (props) => {
     })();
   }, []);
 
-  return cache[uid];
+  return [
+    cache[uid],
+    cache
+  ]
 };
