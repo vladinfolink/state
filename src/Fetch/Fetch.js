@@ -7,14 +7,14 @@ import { skipKey, getUniqString } from "./util.ts";
 // dalea grele:
 export const StateContext = createContext();
 
-const initialState = { cache: {} };
+const initialState = { store: {} };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_REQUEST_DATA":
       return {
         ...state,
-        cache: {
+        store: {
           ...state.cache,
           [action.uid]: action.payload,
         },
@@ -37,18 +37,18 @@ export const StateProvider = ({ children }) => (
 );
 
 export const useRequest = () => {
-  const [{ cache }, dispatch] = useContext(StateContext).cache;
-  return { cache, dispatch };
+  const [{ store }, dispatch] = useContext(StateContext).cache;
+  return { store, dispatch };
 };
 
 async function makeStore(props) {
-  const { cache, dispatch } = this;
+  const { store, dispatch } = this;
   const { endpoint, method, params, onlyData } = props;
   const uid = getUniqString({ ...props });
 
-  console.log({ cache });
+  console.log({ store });
 
-  if (cache[uid]) return cache[uid];
+  if (store[uid]) return store[uid];
   const response = await axios[method](endpoint);
 
   dispatch({
@@ -63,11 +63,11 @@ async function makeStore(props) {
 }
 
 export function useFetch() {
-  const { cache, dispatch } = useRequest();
+  const { store, dispatch } = useRequest();
 
   return {
     request: makeStore.bind({
-      cache,
+      store,
       dispatch,
     }),
   };
