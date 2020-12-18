@@ -32,29 +32,37 @@ export const StateProvider = ({ children }) => (
 );
 
 export const useRequest = () => {
-  return useContext(StateContext);
+  const [{ cache }, dispatch] = useContext(StateContext);
+  return { cache, dispatch };
 };
 
-export const useFetch = (props) => {
+async function makeStore(props) {
+  const { cache, dispatch } = this;
   const { endpoint, method, params, onlyData } = props;
-  const [{ cache }, dispatch] = useRequest();
-
   const uid = getUniqString({ ...props });
 
-  useEffect(() => {
-    (async () => {
-      if (cache[uid]) return;
-      const response = await axios[method](endpoint);
+  if (cache[uid]) return;
+  const response = await axios[method](endpoint);
 
-      dispatch({
-        uid,
-        type: "SET_REQUEST_DATA",
-        payload: {
-          ...(onlyData ? { data: response.data } : { response }),
-        },
-      });
-    })();
-  }, []);
+  dispatch({
+    uid,
+    type: "SET_REQUEST_DATA",
+    payload: {
+      ...(onlyData ? { data: response.data } : { response }),
+    },
+  });
 
   return [cache[uid], cache];
-};
+}
+
+export function useFetch() {
+  const { cache, dispatch } = useRequest();
+
+  return {
+    res: makeStore.bind({
+      cache,
+      dispatch,
+    }),
+    cache,
+  };
+}
