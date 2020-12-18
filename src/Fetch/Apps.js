@@ -18,13 +18,15 @@ const ThemedButton = () => {
   const { res, cache } = useFetch();
 
   useEffect(() => {
-    const asd = res({
-      endpoint: "https://swapi.dev/api/people/3",
-      method: "get",
-      params: { id: 123 },
-      onlyData: true,
-    });
-    console.log({ asd });
+    (async ()=>{
+      const asd = await res({
+        endpoint: "https://swapi.dev/api/people/3",
+        method: "get",
+        params: { id: 123 },
+        onlyData: true,
+      });
+      console.log({ asd });
+    })()
   }, []);
 
   console.log({ cache });
