@@ -15,24 +15,39 @@ const ThemedButton = () => {
   //   onlyData: true,
   // })()
 
-  const { res, cache } = useFetch();
+  const { request } = useFetch();
 
   useEffect(() => {
-    (async ()=>{
-      const asd = await res({
-        endpoint: "https://swapi.dev/api/people/3",
-        method: "get",
-        params: { id: 123 },
-        onlyData: true,
-      });
-      console.log({ asd });
-    })()
+    const asd = request({
+      endpoint: "https://swapi.dev/api/people/3",
+      method: "get",
+      params: { id: 123 },
+      onlyData: true,
+    }).then((resp) => {
+      console.log({ resp });
+    });
   }, []);
 
-  console.log({ cache });
+  const makeReq = () => {
+    request({
+      endpoint: "https://swapi.dev/api/people/1",
+      method: "get",
+      params: { id: 123 },
+      onlyData: true,
+    }).then((resp) => {
+      console.log({ resp });
+    });
+  }
 
   return (
     <>
+    <button
+      onClick={
+        () => {
+          return makeReq()
+        }
+      }
+    >GET</button>
       <br />
       --------------------
       <br />

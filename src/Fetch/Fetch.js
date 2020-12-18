@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 
 import axios from "axios";
 
@@ -41,7 +41,7 @@ async function makeStore(props) {
   const { endpoint, method, params, onlyData } = props;
   const uid = getUniqString({ ...props });
 
-  if (cache[uid]) return;
+  if (cache[uid]) return cache[uid];
   const response = await axios[method](endpoint);
 
   dispatch({
@@ -52,17 +52,16 @@ async function makeStore(props) {
     },
   });
 
-  return uid
+  return onlyData ? { data: response.data } : { response };
 }
 
 export function useFetch() {
   const { cache, dispatch } = useRequest();
 
   return {
-    res: makeStore.bind({
+    request: makeStore.bind({
       cache,
       dispatch,
-    }),
-    cache,
+    })
   };
 }
