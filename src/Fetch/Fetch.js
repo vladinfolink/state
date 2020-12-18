@@ -52,7 +52,7 @@ async function makeStore(props) {
     },
   });
 
-  return [cache[uid], cache];
+  return uid
 }
 
 export function useFetch() {
