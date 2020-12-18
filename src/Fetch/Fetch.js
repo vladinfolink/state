@@ -2,7 +2,7 @@ import React, { createContext, useContext, useReducer } from "react";
 
 import axios from "axios";
 
-import { skipKey, getUniqString } from "./util";
+import { skipKey, getUniqString } from "./util.ts";
 
 // dalea grele:
 export const StateContext = createContext();
@@ -26,13 +26,18 @@ const reducer = (state, action) => {
 };
 
 export const StateProvider = ({ children }) => (
-  <StateContext.Provider value={useReducer(reducer, initialState)}>
+  <StateContext.Provider
+    value={{
+      cache: useReducer(reducer, initialState),
+      client: {}
+    }}
+  >
     {children}
   </StateContext.Provider>
 );
 
 export const useRequest = () => {
-  const [{ cache }, dispatch] = useContext(StateContext);
+  const [{ cache }, dispatch] = useContext(StateContext).cache;
   return { cache, dispatch };
 };
 
@@ -40,6 +45,8 @@ async function makeStore(props) {
   const { cache, dispatch } = this;
   const { endpoint, method, params, onlyData } = props;
   const uid = getUniqString({ ...props });
+
+  console.log({ cache });
 
   if (cache[uid]) return cache[uid];
   const response = await axios[method](endpoint);
@@ -62,6 +69,6 @@ export function useFetch() {
     request: makeStore.bind({
       cache,
       dispatch,
-    })
+    }),
   };
 }

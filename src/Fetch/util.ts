@@ -1,25 +1,28 @@
-export function skipKey(object, array) {
+export function skipKey(
+  object: { [x: string]: any },
+  array: string | string[]
+) {
   return Object.keys(object)
     .filter(function (item) {
       return !array.includes(item);
     })
     .reduce(function (accessor, key) {
-      return (accessor[key] = object[key]), accessor;
+      return ((accessor as any)[key] = object[key]), accessor;
     }, {});
 }
 
-export function genUniqStrFromKeys(object, string = "") {
+export function genUniqStrFromKeys(object: { [x: string]: any }, string = "") {
   return Object.keys(object).reduce((ini, key) => {
     const prepend = string.length ? string + "." : "";
     if (typeof object[key] === "object") {
       Object.assign(ini, genUniqStrFromKeys(object[key], prepend + key));
     } else {
-      ini[prepend + key] = object[key];
+      (ini as any)[prepend + key] = object[key];
     }
     return ini;
   }, {});
 }
 
-export function getUniqString(object) {
+export function getUniqString(object: { [x: string]: any }) {
   return Object.entries(genUniqStrFromKeys(object)).flat(Infinity).join("~~~");
 }
