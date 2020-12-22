@@ -15,7 +15,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         store: {
-          ...state.cache,
+          ...state.store,
           [action.uid]: action.payload,
         },
       };

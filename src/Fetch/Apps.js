@@ -1,5 +1,8 @@
-import { StateProvider, useFetch } from "./Fetch";
-import { useEffect } from "react";
+import { StateProvider, useFetch,  } from "./Fetch";
+import { useEffect, useContext } from "react";
+
+import {StateContext} from './Fetch'
+
 const ThemedButton = () => {
   // const [res, cache] = useFetch({
   //   endpoint: "https://swapi.dev/api/people/1",
@@ -16,6 +19,7 @@ const ThemedButton = () => {
   // })()
 
   const { request } = useFetch();
+  const {cache} = useContext(StateContext)
 
   useEffect(() => {
     const asd = request({
@@ -38,6 +42,8 @@ const ThemedButton = () => {
       console.log({ resp });
     });
   }
+
+  console.log({cache})
 
   return (
     <>
